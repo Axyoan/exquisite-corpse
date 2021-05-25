@@ -36,8 +36,14 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        Account::create($request->all());
-        return redirect()->route('account.index');
+        $account = new Account();
+        $account->username = $request->username;
+        $account->email = $request->email;
+        $account->password = $request->password;
+        $confirmPassword = $request->password_confirmation;
+        if ($account->password != $confirmPassword)
+            return redirect()->route('account.create');
+        return redirect('/');
     }
 
     /**

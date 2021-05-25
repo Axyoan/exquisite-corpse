@@ -1,0 +1,36 @@
+
+.bg-dark-teal {
+    background-color: #264653;
+}
+
+.bg-light-teal{
+    background-color: #2a9d8f;
+}
+.bg-dark-orange{
+    background-color: #e76f51;
+}
+.bg-light-orange{
+    background-color: #f4a261;
+}
+.bg-yellow{
+    background-color: #e9c46a;
+}
+
+.text-light-teal{
+    color: #2a9d8f;
+}
+
+.text-white{
+    color: #fff;
+}
+
+.border-light-teal{
+    border:.2rem solid #2a9d8f;
+}
+
+.border-dark-teal{
+    border-width: .2rem;
+    border-style: solid;
+    border-color: #264653;
+}
+

@@ -21,6 +21,8 @@
         "tailwindcss": "^2.0.1"
     },
     "dependencies": {
+        "bootstrap": "^5.0.1",
+        "material-design-icons": "^3.0.1",
         "node": "^16.1.0",
         "npm": "^7.13.0"
     }
