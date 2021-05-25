@@ -31,7 +31,6 @@
                         {{$account->username}}
                     </a>
                 </td>
-                <td>{{$account->username}}</td>
                 <td>{{$account->password}}</td>
                 <td>{{$account->email}}</td>
             </tr>

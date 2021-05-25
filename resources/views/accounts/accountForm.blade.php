@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <!--Here goes nav-->
+    @include('navbar')
     <div class="container">
 
         <div class="row">
@@ -43,9 +43,15 @@
                         <label for="password_confirmation" class="form-label">Repeat Password</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
                     </div>
-                    <div class="row mx-auto">
+                    <div class="row mx-auto mb-3">
                         <input type="submit" value="Sign up" class="btn bg-light-teal text-white">
                     </div>
+                    @if($error != null)
+                    <div class="container bg-danger rounded text-white">
+                        ERROR:
+                        {{$error}}
+                    </div>
+                    @endif
             </div>
             </form>
             <div class="col"></div>

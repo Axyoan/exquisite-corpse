@@ -23,9 +23,9 @@ class AccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($error = null)
     {
-        return view('accounts.accountForm');
+        return view('accounts.accountForm', compact('error'));
     }
 
     /**
@@ -41,8 +41,21 @@ class AccountController extends Controller
         $account->email = $request->email;
         $account->password = $request->password;
         $confirmPassword = $request->password_confirmation;
-        if ($account->password != $confirmPassword)
-            return redirect()->route('account.create');
+        if ($account->username == null or $account->email == null or $account->password == null) {
+            $error = "You must fill all fields";
+            return view('accounts.accountForm', compact('error'));
+        }
+        if (!filter_var($account->email, FILTER_VALIDATE_EMAIL)) {
+            $error = "Incorrect email";
+            return view('accounts.accountForm', compact('error'));
+        }
+        if ($account->password != $confirmPassword) {
+            $error = "Passwords dont match";
+            return view('accounts.accountForm', compact('error'));
+            //return redirect()->route('account.create')->compact($error);
+        }
+        $account->save();
+
         return redirect('/');
     }
 
