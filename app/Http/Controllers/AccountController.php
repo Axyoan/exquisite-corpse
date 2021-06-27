@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
+
+    public function login()
+    {
+        return view('accounts.accountLogin');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +31,9 @@ class AccountController extends Controller
      */
     public function create($error = null)
     {
-        return view('accounts.accountForm', compact('error'));
+        $username = null;
+        $email = null;
+        return view('accounts.accountForm', compact('error', 'username', 'email'));
     }
 
     /**
@@ -37,25 +45,27 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         $account = new Account();
+        $username = $request->username ? $request->username : null;
+        $email = $request->email ? $request->email : null;
         $account->username = $request->username;
         $account->email = $request->email;
         $account->password = $request->password;
         $confirmPassword = $request->password_confirmation;
         if ($account->username == null or $account->email == null or $account->password == null) {
             $error = "You must fill all fields";
-            return view('accounts.accountForm', compact('error'));
+            return view('accounts.accountForm', compact('error', 'username', 'email'));
         }
         if (!filter_var($account->email, FILTER_VALIDATE_EMAIL)) {
             $error = "Incorrect email";
-            return view('accounts.accountForm', compact('error'));
+            $email = null;
+            return view('accounts.accountForm', compact('error', 'username', 'email'));
         }
         if ($account->password != $confirmPassword) {
             $error = "Passwords dont match";
-            return view('accounts.accountForm', compact('error'));
+            return view('accounts.accountForm', compact('error', 'username', 'email'));
             //return redirect()->route('account.create')->compact($error);
         }
         $account->save();
-
         return redirect('/');
     }
 

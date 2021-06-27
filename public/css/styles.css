@@ -26,11 +26,30 @@
 
 .border-light-teal{
     border:.2rem solid #2a9d8f;
+    border-radius: 10%;
 }
 
 .border-dark-teal{
-    border-width: .2rem;
-    border-style: solid;
-    border-color: #264653;
+    border: .2 remsolid #264653;
+    border-radius: 10%;
 }
 
+.story-card{
+    font-size: 1em;
+    border: 1px solid #2a9d8f;
+    margin: 5px;
+    padding: 5px;
+}
+
+.story{
+    white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.vote{
+    color: #2a9d8f;
+    text-decoration: none;
+}

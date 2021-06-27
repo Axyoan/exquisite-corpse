@@ -18,11 +18,7 @@
     <div class="container text-start mt-3">
         <h1 class="fs-1">About</h1>
         <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error ad impedit nam eligendi cupiditate consequatur, unde, veniam praesentium nemo quidem earum debitis doloremque dolorem. Libero placeat repudiandae dicta atque enim?
-            Officia deleniti enim veritatis, ad cumque suscipit. Tempora cum quia ipsa nihil enim voluptatem animi minima ab accusantium odit obcaecati ea fuga unde esse itaque blanditiis, at delectus soluta error.
-            Maxime, quae reprehenderit ea tempore animi facere consectetur rem beatae voluptatem repudiandae a quidem illo cum voluptates minima expedita consequuntur iusto dicta aut laudantium. Suscipit perferendis laboriosam aspernatur nulla dolorem!
-            Totam, iusto? Voluptas consequuntur molestiae quis, dolores numquam laboriosam. Deserunt velit nulla laborum nostrum inventore aut quos qui ullam. Assumenda similique quidem quas repellat laborum iste omnis! Voluptatem, velit recusandae.
-            Expedita, possimus! Inventore optio assumenda modi exercitationem? Rerum voluptate soluta id est ducimus laboriosam doloribus, veniam tenetur fuga mollitia vel. Dolorem dolor accusamus dolores minus. Iusto explicabo fuga vitae deserunt?
+            Exquisite corpse, also known as exquisite cadaver (from the original French term cadavre exquis), is a method by which a collection of words or images is collectively assembled. Each collaborator adds to a composition in sequence, either by being allowed to see only the end of what the previous person contributed.
         </p>
         <div class="container mx-auto">
             <img class="img-fluid mx-auto d-block" src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Exquisite_Corpse_%286042257203%29.jpg" alt="Drawing made with the exquisite corpse method">
