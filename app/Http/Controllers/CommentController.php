@@ -3,10 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Story;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('show', 'index');
+        $this->middleware('verified')->except('show', 'index');
+    }
+
+    public function postComment(Request $request, Story $story)
+    {
+        if (!strlen(trim($request->text))) {
+            return redirect()->action([StoryController::class, 'show'], ['story' => $story]);
+        }
+        $comment = new Comment();
+        $comment->text = $request->text;
+        $comment->user_id = Auth::id();
+        $comment->commentable_id = $story->id;
+        $comment->commentable_type = 'App\Models\Story';
+        $comment->save();
+        return redirect()->action([StoryController::class, 'show'], ['story' => $story]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +58,8 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
     }
 
     /**
@@ -46,6 +70,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
+        dd("show");
         //
     }
 
@@ -57,6 +82,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
+        dd("edit");
         //
     }
 
@@ -69,6 +95,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
+        dd("update");
         //
     }
 
@@ -80,6 +107,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        $story = Story::find($comment->commentable_id);
+        return redirect()->action([StoryController::class, 'show'], ['story' => $story]);
     }
 }

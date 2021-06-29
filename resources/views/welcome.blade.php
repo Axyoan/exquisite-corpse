@@ -16,32 +16,41 @@
     @include('navbar')
     <div class="container mt-2 fs-2">
         <div class="row justify-content-start p-1">
-            <form method="GET">
-                @csrf
-                <div class="btn-group col col-auto" role="group" aria-label="New or continue">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnnew" autocomplete="off" checked value="btnnew">
-                    <label class="btn btn-outline-primary fs-4" for="btnnew">New</label>
+            <h2 class="col col-auto fs-2">
+                Create posts
+            </h2>
+        </div>
+        @if(Auth::check() && Auth::user()->email_verified_at)
+        <form method="GET" class="row p-1">
+            @csrf
+            <div class="btn-group col col-8 col-lg-3" role="group" aria-label="New or continue">
+                <input type="radio" class="btn-check" name="btnradio" id="btnnew" autocomplete="off" checked value="btnnew">
+                <label class="btn btn-outline-primary fs-4" for="btnnew">New</label>
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btncontinue" autocomplete="off" value="btncontinue">
-                    <label class="btn btn-outline-primary fs-4" for="btncontinue">Continue</label>
-                </div>
-                <button formaction="/drawing/redirect" class="btn col col-auto bg-light-orange rounded me-1 fs-4">
+                <input type="radio" class="btn-check" name="btnradio" id="btncontinue" autocomplete="off" value="btncontinue">
+                <label class="btn btn-outline-primary fs-4" for="btncontinue">Continue</label>
+            </div>
+            <div class="col col-8 col-lg-3">
+                <button formaction="/drawing/redirect" class="btn bg-light-orange rounded me-1 fs-4">
                     Drawing
                     <span class="material-icons">
                         draw
                     </span>
                 </button>
-                <button formaction="/story/redirect" class=" btn col col-auto bg-yellow rounded fs-4 me-auto">
+                <button formaction="/story/redirect" class="btn bg-yellow rounded fs-4 me-auto">
                     Story
                     <span class="material-icons">
                         notes
                     </span>
                 </button>
-            </form>
+            </div>
+        </form>
+        @else
+        <div class="btn-group col col-auto fs-4">
+            You must be logged in and have a verified email to post.
         </div>
-
-    </div>
-    <div class="container mt-2 fs-2+">
+        @endif
+        <br>
         <div class="row">
             <div class="col">
                 <h2>Gallery</h2>
@@ -49,14 +58,15 @@
         </div>
         <div class="row">
             @foreach ($stories as $story)
-            <div class="col col-auto story-card">
+            <div class="col col-xs-12 col-sm-8 col-md-4 col-xl-3 story-card fs-6">
+                <p>
                 {{substr($story->text, 0, 100)}}...
-                <a href="{{ route('story.show', $story) }}">keep reading</a>
+                </p>
+                <a href="{{ route('story.show', $story) }}" class="link">keep reading</a>
             </div>
             @endforeach
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </body>
 

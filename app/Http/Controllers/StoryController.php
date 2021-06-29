@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Story;
 use App\Models\Comment;
-use App\Models\Account;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -66,9 +66,13 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->isFinished = true;
-        $request->score = 0;
-        Story::create($request->all());
+        $story = new Story();
+        $story->text = $request->text;
+        $story->score = 0;
+        $story->isFinished = false;
+        $story->save();
+        $user_id = Auth::id();
+        $story->users()->attach($user_id);
         return redirect('/');
     }
 
@@ -80,11 +84,12 @@ class StoryController extends Controller
      */
     public function show(Story $story)
     {
-        $comments = Comment::where('parent_post_id', $story->id)->get();
+        $comments = $story->comments;
         foreach ($comments as $comment) {
-            $comment->author = Account::where('id', $comment->account_id)->get();
+            $comment->author = $comment->user_id ? User::where('id', $comment->user_id)->get()[0]->name :  "[deleted user]";
         }
-        return view('stories.storyShow', compact('story', 'comments'));
+        $authors = $story->users;
+        return view('stories.storyShow', compact('story', 'comments', 'authors'));
     }
 
     /**
@@ -115,6 +120,8 @@ class StoryController extends Controller
         $story->isFinished = isset($request->isFinished);
         $story->text = $story->text . $request->text;
         $story->save();
+        $user_id = Auth::id();
+        $story->users()->attach($user_id);
         return redirect('/');
     }
 

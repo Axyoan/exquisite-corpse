@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Story;
 use App\Models\Drawing;
+use App\Models\User;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class IndexController extends Controller
+class IndexController extends Controller 
 {
     public function index()
     {

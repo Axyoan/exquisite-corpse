@@ -20,8 +20,13 @@ class DrawingController extends Controller
 
     public function redirect(Request $request)
     {
+        $var = "not yet implemented :(";
+        return view('drawings.drawingForm', compact('var'));
+
+        
         $var = $request->btnradio;
         if ($var == "btnnew") {
+            $var = "not yet implemented :(";
             return view('drawings.drawingForm', compact('var'));
         }
     }

@@ -47,17 +47,17 @@
         <div class="row">
             <div class="col-12">
                 @if(isset($story))
-                <form action="{{ route('story.update', $story[0]) }}" method="POST">
+                    <form action="{{ route('story.update', $story[0]) }}" method="POST">
                     @method('PATCH')
-                    @else
+                @else
                     <form action="{{route('story.store')}}" method="POST">
-                        @endif
+                @endif
                         @csrf
                         <textarea name="text" id="story" cols="100" rows="10" minlength="200" maxlength="1000" required></textarea>
                         @if(isset($story))
                         <br>
                         <input type="checkbox" id="isFinished" name="isFinished" value="isFinished" checked>
-                        <label for="isFinished">Finish the story</label>
+                        <label for="isFinished" class="fs-3">Finish the story</label>
                         <br>
                         @endif
                         <br>

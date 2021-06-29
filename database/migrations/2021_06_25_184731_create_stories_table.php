@@ -29,6 +29,11 @@ class CreateStoriesTable extends Migration
      */
     public function down()
     {
+
+        Schema::dropIfExists('story_user');
+        /* Schema::table('story_user', function (Blueprint $table) {
+            $table->dropForeign('story_id');
+        }); */
         Schema::dropIfExists('stories');
     }
 }

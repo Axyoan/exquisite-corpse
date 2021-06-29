@@ -19,7 +19,18 @@
 .text-light-teal{
     color: #2a9d8f;
 }
-
+.text-dark-teal{
+    color: #264653;
+}
+.text-light-orange{
+    color: #f4a261;
+}
+.text-dark-orange{
+    color: #e76f51;
+}
+.text-light-yellow{
+    color: #e9c46a;
+}
 .text-white{
     color: #fff;
 }
@@ -35,11 +46,19 @@
 }
 
 .story-card{
-    font-size: 1em;
     border: 1px solid #2a9d8f;
+    border-radius: 5px;
     margin: 5px;
     padding: 5px;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
 }
+.story-card p{
+    font-size: .8em;
+}
+
 
 .story{
     white-space: pre-wrap;
@@ -52,4 +71,35 @@
 .vote{
     color: #2a9d8f;
     text-decoration: none;
+}
+
+.comment-card{
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    
+}
+
+.comment-card h3{
+    color: #e76f51;
+    font-size: 500;
+}
+.comment-card p{
+    color: #264653;
+    font-size: 300;
+}
+
+.link{
+    color: #2a9d8f;
+    text-decoration: underline #2a9d8f;
+}
+
+.comment-text-area{
+    border: none;
+}
+
+.drawing-canvas{
+    border: 1px solid black;
 }

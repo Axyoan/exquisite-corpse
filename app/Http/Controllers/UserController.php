@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -76,6 +77,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        Auth::logout();
+        if ($user->delete()) {
+            dd("worked :o");
+        }
         return view('users.userShow', compact('user'));
     }
 
@@ -110,6 +115,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        Auth::logout();
+        $user->delete();
+        return redirect('/');
     }
 }

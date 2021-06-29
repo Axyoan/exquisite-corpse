@@ -13,16 +13,17 @@
                     <a class="nav-link active text-white" aria-current="page" href="/about">About</a>
                 </li>
                 @auth
-                <form method="POST" action="{{ route('logout') }}">
+                <li class="nav-item p-1">
+                    <x-jet-dropdown-link href="{{ route('profile.show') }}" class="nav-link active bg-light-teal text-white rounded">
+                        {{ __('Profile') }}
+                    </x-jet-dropdown-link>
+                </li>
+                <form method="POST" action="{{ route('logout') }}" class="nav-item p-1">
                     @csrf
-
-                    <li class="nav-item p-1">
-                        <x-jet-dropdown-link class="nav-link active bg-light-teal text-white rounded" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    <a class="nav-link active bg-light-teal text-white rounded" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                             {{ __('Log Out') }}
-                        </x-jet-dropdown-link>
-
-                    </li>
+                    </a>
                 </form>
                 @else
                 <li class="nav-item p-1">
@@ -36,3 +37,4 @@
         </div>
     </div>
 </nav>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>

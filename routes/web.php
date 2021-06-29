@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DrawingController;
 use App\Http\Controllers\IndexController;
@@ -21,10 +22,13 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 Route::get('story/redirect', [StoryController::class, 'redirect']);
 Route::get('drawing/redirect', [DrawingController::class, 'redirect']);
 Route::get('user/login', [UserController::class, 'login']);
+Route::get('user/{user}/destroy', [UserController::class, 'destroy'])->name('deleteUser');
+Route::post('comment/{story}/post-comment', [CommentController::class, 'postComment'])->name('comment.post-comment');
 Route::resource('user', UserController::class);
 Route::resource('story', StoryController::class);
-Route::resource('drawing/', DrawingController::class);
-
+Route::resource('drawing', DrawingController::class);
+Route::resource('comment', CommentController::class);
+Route::resource('user', UserController::class);
 Route::get('/', [IndexController::class, 'index']);
 
 Route::get('/about', function () {

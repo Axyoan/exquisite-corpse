@@ -29,6 +29,10 @@ class CreateDrawingsTable extends Migration
      */
     public function down()
     {
+        /* Schema::table('drawing_user', function (Blueprint $table) {
+            $table->dropForeign(['drawing_id']);
+        }); */
+        Schema::dropIfExists('drawing_user');
         Schema::dropIfExists('drawings');
     }
 }

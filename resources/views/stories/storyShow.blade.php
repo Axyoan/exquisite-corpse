@@ -11,13 +11,25 @@
     <title>Story</title>
 </head>
 
-<body>
+<body onload="init();">
     @include('navbar')
     <div class="container">
         <br>
         <br>
         <div class="row">
             <p class="col col-12 story">{{$story->text}}</p>
+        </div>
+        <div class="row fs-5">
+            <div class="col">
+            Authors ({{count($authors)}}):
+            </div>
+        </div>
+        <div class="row fs-4">
+            <div class="col col-auto">
+            @foreach ($authors as $author)
+                <span class="fs-6">{{$author->name}},</span>
+            @endforeach
+        </div>
         </div>
         <hr>
         <div class="row">
@@ -53,32 +65,44 @@
         <br><br>
         <div class="row">
             <div class="col col-auto">
-                <h2 class="fs-3">Comments</h2>
+                <h2 class="fs-3 text-dark-teal">Comments</h2>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <h2 class="fs-4 text-light-teal">New comment:</h2>
+            </div>
+        </div>
+        <div class="row">
+            <form class="col col-auto" action="{{route('comment.post-comment', $story)}}" method="POST">
+                @csrf
+                <textarea name="text" id="" cols="100" rows="5" minlength="1" maxlength="500"></textarea>
                 <br>
-            </div>
+                <input type="submit" value="Post comment" class="bg-light-teal btn rounded text-white">
+            </form>
         </div>
+        <br><br>
         <div class="row">
-            <div class="col">
-                <h2 class="fs-4">New comment:</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <form action="">
-                    <textarea name="newcomment" id="" cols="100" rows="5"></textarea>
-                </form>
-            </div>
-        </div>
-        <br><br><br>
-        <div class="row">
-            <div class="col col-auto">
+            <div class="col col-10">
                 @if(count($comments)==0)
                 <h3 class="fs-5">No comments yet :(</h3>
                 @endif
-                @foreach($comments as $comment)
-                <h3>{{$comment->author}}</h3>
-                <p>{{$comment->text}}</p>
-                @endforeach
+                <ul>
+                    @foreach($comments as $comment)
+                    <li class="comment-card">
+                        <h3>{{$comment->author}}</h3>
+                        <p>{{$comment->text}}</p>
+                        @if($comment->user_id && $comment->user_id==Auth::id())
+                            <form action="{{route('comment.destroy', $comment)}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                                <input type="submit" value="Delete Comment" class="btn rounded bg-light-teal text-white">
+                            </form>
+                        @endif
+                    </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>

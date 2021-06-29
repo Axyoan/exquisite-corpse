@@ -13,9 +13,58 @@
 
 <body>
     @include('navbar')
-    <?php
-        echo $var
-    ?>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2>
+                    <?php echo isset($drawing) ? "Continue Drawing" : "New Drawing" ?>
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col fs-5">
+                <p>
+                    <?php
+                    echo (isset($drawing)) ?
+                        "Below is the end of a random drawing, draw the rest of it."
+                        :
+                        "Start drawing a picture and another user will finish it. Remember they will only be able to see a small part of the bottom of your drawing."
+                    ?>
+                </p>
+            </div>
+        </div>
+        @if(isset($drawing))
+        <div class="row">
+            <div class="col">
+                <p>
+                    Drawing goes here
+                </p>
+            </div>
+        </div>
+        @endif
+        <div class="row">
+            <div class="col-12">
+                <label for="thickness">Thickness:</label>
+                <input type="number" id="thickness" min="1" max="50" value="5" onchange="changeThickness()">
+                <label for="color">Color:</label>
+                <input type="color" name="color" id="color" onchange="changeColor()">
+                <br><br> 
+                @if(isset($drawing))
+                    <form action="{{ route('drawing.update', $drawing) }}" method="POST">
+                    @method('PATCH')
+                @else
+                    <form action="{{route('drawing.store')}}" method="POST">
+                @endif
+                        @csrf
+                        <canvas class="drawing-canvas"></canvas>
+                        <br>
+                        <button type="submit" class="btn btn-primary bg-light-teal">Submit</button>
+
+                    </form>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('js/canvas.js') }}"></script>
 </body>
 
 </html>
