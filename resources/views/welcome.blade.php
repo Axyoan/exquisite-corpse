@@ -76,9 +76,9 @@
                         </div>
                     </a>
                 @else
-                    <a href="{{ route('story.show', $post) }}" class="link col story-card fs-6">
+                    <a href="{{ route('story.show', $post) }}" class="link col-12 col-md-5 col col-lg-2 story-card fs-5">
                         <p>
-                            {{substr($post->text, 0, 100)}}...
+                            {{substr($post->text, 0, 200)}}...
                         </p>
                         <div class="row fs-6 justify-content-start">
                             <div class="col col-auto">

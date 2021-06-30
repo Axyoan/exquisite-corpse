@@ -39,7 +39,7 @@
         <div class="row fs-4">
             <div class="col col-auto">
             @foreach ($authors as $author)
-                <span class="fs-6">{{$author->name}} </span>
+                <span class="fs-6">{{$author->name}},</span>
             @endforeach
         </div>
         </div>

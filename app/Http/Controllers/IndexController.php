@@ -14,10 +14,10 @@ class IndexController extends Controller
     {
         $stories = Story::where('isFinished', true)->get()->all();
         $drawings = Drawing::where('isFinished', true)->get()->all();
-        foreach($stories as $story){
+        foreach ($stories as $story) {
             $story->type = "story";
         }
-        foreach($drawings as $drawing){
+        foreach ($drawings as $drawing) {
             $drawing->type = "drawing";
         }
         $all_posts = array_merge($stories, $drawings);
