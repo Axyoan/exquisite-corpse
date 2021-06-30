@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('css/styles.css') }}">
-    <title>Story</title>
+    <title>Drawing</title>
 </head>
 
 <body>
@@ -17,8 +17,20 @@
         <br>
         <br>
         <div class="row">
-            <p class="col col-12 story">{{$story->text}}</p>
+            <img src="{{$drawing->image}}" alt="drawing" max-width="1000" max-height="1400" id="image" class="drawing">
         </div>
+        <br>
+
+        <div class="row fs-5"><div class="col">Resize Image:</div></div>
+        <div class="row d-flex p-1 justify-content-between">
+            <button class="col col-auto bg-light-orange text-white fs-6 btn rounded" id="sizeFit">Fit screen</button>
+            <button class="col col-auto bg-light-orange text-white fs-6 btn rounded" id="size25">25%</button>
+            <button class="col col-auto bg-light-orange text-white fs-6 btn rounded" id="size50">50%</button>
+            <button class="col col-auto bg-light-orange text-white fs-6 btn rounded" id="size75">75%</button>
+            <button class="col col-auto bg-light-orange text-white fs-6 btn rounded" id="size100">100%</button>
+            <div class="col col-8"></div>
+        </div>
+        <br>
         <div class="row fs-5">
             <div class="col">
             Authors ({{count($authors)}}):
@@ -27,14 +39,14 @@
         <div class="row fs-4">
             <div class="col col-auto">
             @foreach ($authors as $author)
-                <span class="fs-6">{{$author->name}},</span>
+                <span class="fs-6">{{$author->name}} </span>
             @endforeach
         </div>
         </div>
         <hr>
         <div class="row">
             <div class="col col-1">
-                <form action="{{ route('story.update', $story) }}" method="POST">
+                <form action="{{ route('drawing.update', $drawing) }}" method="POST">
                     @csrf
                     @method('PATCH')
                     <input type="hidden" name="change" value="inc">
@@ -46,10 +58,10 @@
                 </form>
             </div>
             <span class="col col-1">
-                {{$story->score}}
+                {{$drawing->score}}
             </span>
             <div class="col">
-                <form action="{{ route('story.update', $story) }}" method="POST">
+                <form action="{{ route('drawing.update', $drawing) }}" method="POST">
                     @method('PATCH')
                     @csrf
                     <input type="hidden" name="change" value="dec">
@@ -63,7 +75,9 @@
 
         </div>
         <br><br>
-        @include('comments', ['story'=>$story]);
+        @include('comments', ['drawing'=>$drawing]);
+        
+    <script src="{{ asset('js/resizeImage.js') }}"></script>
 </body>
 
 </html>

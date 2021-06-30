@@ -41,8 +41,8 @@
 }
 
 .border-dark-teal{
-    border: .2 remsolid #264653;
-    border-radius: 10%;
+    border: 1px solid #264653;
+    border-radius: 2%;
 }
 
 .story-card{
@@ -79,7 +79,6 @@
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
-    
 }
 
 .comment-card h3{
@@ -93,13 +92,42 @@
 
 .link{
     color: #2a9d8f;
-    text-decoration: underline #2a9d8f;
+    text-decoration: none;
+}
+.link p {
+    color: #000;
 }
 
 .comment-text-area{
     border: none;
 }
 
-.drawing-canvas{
+.canvas{
     border: 1px solid black;
+    display:block;
+}
+
+#prevCanvas{
+    border-bottom: none;
+}
+
+.drawing{
+    border: 1px solid black;
+    border-radius: 1%;
+}
+.box{
+    border: 1px solid black;
+    border-radius: 1%;
+}
+
+.thumb-up{
+    color:#2a9d8f;
+    background: none;
+    border:none;
+}
+
+.thumb-down{
+    color:#e76f51;
+    background: none;
+    border:none;
 }

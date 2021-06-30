@@ -15,7 +15,7 @@ class CreateDrawingsTable extends Migration
     {
         Schema::create('drawings', function (Blueprint $table) {
             $table->id();
-            $table->binary('image');
+            $table->longText('image');
             $table->integer('score')->default(0);;
             $table->boolean('isFinished')->default(false);;
             $table->timestamps();

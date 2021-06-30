@@ -19,6 +19,9 @@
                 <h2>
                     <?php echo isset($drawing) ? "Continue Drawing" : "New Drawing" ?>
                 </h2>
+                @if(isset($msg))
+                <span class="text-dark-orange fs-5">{{$msg}}</span>
+                @endif
             </div>
         </div>
         <div class="row">
@@ -33,15 +36,6 @@
                 </p>
             </div>
         </div>
-        @if(isset($drawing))
-        <div class="row">
-            <div class="col">
-                <p>
-                    Drawing goes here
-                </p>
-            </div>
-        </div>
-        @endif
         <div class="row">
             <div class="col-12">
                 <label for="thickness">Thickness:</label>
@@ -50,17 +44,22 @@
                 <input type="color" name="color" id="color" onchange="changeColor()">
                 <br><br> 
                 @if(isset($drawing))
-                    <form action="{{ route('drawing.update', $drawing) }}" method="POST">
+                    <form action="{{ route('drawing.update', $drawing) }}" method="POST" id="formEditCanvas">
                     @method('PATCH')
                 @else
-                    <form action="{{route('drawing.store')}}" method="POST">
+                    <form action="{{route('drawing.store')}}" method="POST" id="formCanvas">
                 @endif
                         @csrf
-                        <canvas class="drawing-canvas"></canvas>
-                        <br>
-                        <button type="submit" class="btn btn-primary bg-light-teal">Submit</button>
-
-                    </form>
+                    @if(isset($drawing))
+                    <input type="hidden" name="prevDrawing" id="prevDrawing" value="{{$drawing->image}}">
+                        <canvas id="prevCanvas" class="canvas"></canvas>
+                    @endif
+                    <canvas class="drawing-canvas canvas"></canvas>
+                    <input type="hidden" name="png" id="png">
+                    <br>
+                    <button type="submit" class="btn btn-primary bg-light-teal" id="submitCanvas">Submit</button>
+                </form>
+                <canvas id="result" class="canvas"></canvas>
             </div>
         </div>
     </div>

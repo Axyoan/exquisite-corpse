@@ -13,9 +13,102 @@
 <body>
     @include('navbar')
     <div class="container m-5 p-5">
-        <div class="row">
-            <h3>Delete account</h3>
-            <a href="{{route('deleteUser', Auth::User())}}" class="btn rounded bg-dark-orange text-white col col-2 fs-5">Delete your account</a>
+        <div class="container">
+            <div class="row">
+                <h2 class="col">
+                    Account information
+                </h2>
+            </div>
+            <div class="row justify-content-start">
+                <p class="col col-6">
+                    Update your account's information.
+                </p>
+            </div>
+            @if (Session::get('infoErrors') && !empty(Session::get('infoErrors')))
+                <div class="row text-dark-orange">
+                    <span>ERROR:</span>
+                    <ul>
+                        @foreach (Session::get('infoErrors') as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{route('updateUser', Auth::user())}}" class="row">
+                @csrf
+                @method('UPDATE')
+                <div class="col col-auto">
+                    <div class="col col-12">
+                        <label for="name">Name:</label>
+                        <br>
+                        <input type="text" name="name" id="name" value="{{Auth::user()->name}}" required>
+                    </div>
+                    <div class="col col-12">
+                        <label for="email">Email:</label>
+                        <br>
+                        <input type="email" name="email" id="email" value="{{Auth::user()->email}}" required>
+                    </div>
+                    <br>
+                    <input type="submit" value="Save" class="btn rounded bg-dark-teal text-white fs-5">
+                </div>
+            </form>
+        </div>
+        <br><hr><br>
+        <div class="container">
+            <div class="row">
+                <h2 class="col">
+                    Update password
+                </h2>
+            </div>
+            <div class="row justify-content-start">
+                <p class="col col-12">
+                    Use a long password with a variety of characters.
+                </p>
+            </div>
+            @if (Session::get('passwordErrors') && !empty(Session::get('passwordErrors')))
+                <div class="row text-dark-orange">
+                    <span>ERROR:</span>
+                    <ul>
+                        @foreach (Session::get('passwordErrors') as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{route('updateUser', Auth::user())}}" class="row">
+                @method('UPDATE')
+                <div class="col col-auto">
+                    <div class="col col-12">
+                        <label for="oldPassword">Old Password:</label>
+                        <br>
+                        <input type="password" name="oldPassword" id="oldPassword" required>
+                    </div>
+                    <div class="col col-12">
+                        <label for="newPassword">New Password:</label>
+                        <br>
+                        <input type="password" name="newPassword" id="newPassword" required>
+                    </div>
+                    <div class="col col-12">
+                        <label for="newPasswordConfirm">Confirm new Password:</label>
+                        <br>
+                        <input type="password" name="newPasswordConfirm" id="newPasswordConfirm" required>
+                    </div>
+                    <br>
+                    <input type="submit" value="Save" class="btn rounded bg-dark-teal text-white fs-5">
+                </div>
+            </form>
+        </div>
+        <br><hr><br>
+        <div class="container">
+            <div class="row">
+                <h2 class="col">Delete account</h2>
+            </div>
+            <div class="row justify-content-start">
+                <p class="col col-auto">
+                    This will not delete any of the posts you contributed to, only your comments. Click the button below if you are sure you want to delete your account.
+                </p>
+            </div>
+            <a href="{{route('deleteUser', Auth::User())}}" class="btn rounded bg-dark-orange text-white col fs-5">Delete your account</a>
         </div>
     </div>
     

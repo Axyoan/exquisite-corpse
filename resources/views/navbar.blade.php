@@ -15,7 +15,7 @@
                 @auth
                 <li class="nav-item p-1">
                     <x-jet-dropdown-link href="{{ route('profile.show') }}" class="nav-link active bg-light-teal text-white rounded">
-                        {{ __('Profile') }}
+                        {{Auth::user()->name}}
                     </x-jet-dropdown-link>
                 </li>
                 <form method="POST" action="{{ route('logout') }}" class="nav-item p-1">

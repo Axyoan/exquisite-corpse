@@ -23,12 +23,16 @@
         @if(Auth::check() && Auth::user()->email_verified_at)
         <form method="GET" class="row p-1">
             @csrf
-            <div class="btn-group col col-8 col-lg-3" role="group" aria-label="New or continue">
+            <div class="btn-group col col-8 col-lg-3 align-items-center" role="group" aria-label="New or continue">
                 <input type="radio" class="btn-check" name="btnradio" id="btnnew" autocomplete="off" checked value="btnnew">
-                <label class="btn btn-outline-primary fs-4" for="btnnew">New</label>
+                <label class="btn btn-outline-primary fs-4" for="btnnew">
+                    New
+                </label>
 
                 <input type="radio" class="btn-check" name="btnradio" id="btncontinue" autocomplete="off" value="btncontinue">
-                <label class="btn btn-outline-primary fs-4" for="btncontinue">Continue</label>
+                <label class="btn btn-outline-primary fs-4" for="btncontinue">
+                    Continue
+                </label>
             </div>
             <div class="col col-8 col-lg-3">
                 <button formaction="/drawing/redirect" class="btn bg-light-orange rounded me-1 fs-4">
@@ -56,14 +60,36 @@
                 <h2>Gallery</h2>
             </div>
         </div>
-        <div class="row">
-            @foreach ($stories as $story)
-            <div class="col col-xs-12 col-sm-8 col-md-4 col-xl-3 story-card fs-6">
-                <p>
-                {{substr($story->text, 0, 100)}}...
-                </p>
-                <a href="{{ route('story.show', $story) }}" class="link">keep reading</a>
-            </div>
+        <div class="row d-flex">
+            @foreach ($all_posts as $post)
+                @if ($post->type=="drawing")
+                    <a href="{{ route('drawing.show', $post) }}" class="link col col-auto story-card fs-6">
+                        <img src="{{$post->image}}" alt="drawing" width="250" height="375">
+                        <br>
+                        <div class="row fs-6 justify-content-start">
+                            <div class="col col-auto">
+                                Score: {{$post->score}}
+                            </div>
+                            <div class="col col-auto">
+                                Comments: {{count($post->comments)}}
+                            </div>
+                        </div>
+                    </a>
+                @else
+                    <a href="{{ route('story.show', $post) }}" class="link col story-card fs-6">
+                        <p>
+                            {{substr($post->text, 0, 100)}}...
+                        </p>
+                        <div class="row fs-6 justify-content-start">
+                            <div class="col col-auto">
+                                Score: {{$post->score}}
+                            </div>
+                            <div class="col col-auto">
+                                Comments: {{count($post->comments)}}
+                            </div>
+                        </div>
+                    </a>
+                @endif
             @endforeach
         </div>
     </div>

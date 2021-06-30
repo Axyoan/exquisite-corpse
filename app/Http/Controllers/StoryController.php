@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class StoryController extends Controller
@@ -29,15 +30,37 @@ class StoryController extends Controller
         if ($var == "btnnew") {
             return view('stories.storyForm');
         } else {
-            $story = Story::where('isFinished', false)->orderByRaw('RAND()')->take(1)->get();;
-            //$story = Story::orderByRaw('RAND()')->take(1)->get();
+            $invalidStories = DB::table('story_user')->where('user_id', Auth::id())->get();
+            $invalidIDs = array_map(
+                function ($n) {
+                    return $n->story_id;
+                },
+                $invalidStories->all()
+            );
+            $story = Story::where('isFinished', false)->whereNotIn('id', $invalidIDs)->orderByRaw('RAND()')->take(1)->get();;
             if (isset($story) && isset($story[0])) {
                 return view('stories.storyForm', compact('story'));
             } else {
-                return view('stories.storyForm');
+                $msg = "There are no incomplete stories (yours don't count, you cant finish your own stories)";
+                return view('stories.storyForm', compact('msg'));
             }
         }
     }
+
+    public function postComment(Request $request, Story $story)
+    {
+        if (!strlen(trim($request->text))) {
+            return redirect()->action([StoryController::class, 'show'], ['story' => $story]);
+        }
+        $comment = new Comment();
+        $comment->text = $request->text;
+        $comment->user_id = Auth::id();
+        $comment->commentable_id = $story->id;
+        $comment->commentable_type = 'App\Models\Story';
+        $comment->save();
+        return redirect()->action([StoryController::class, 'show'], ['story' => $story]);
+    }
+
     /**
      * Display a listing of the resource.
      *

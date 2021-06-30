@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Drawing extends Model
 {
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');

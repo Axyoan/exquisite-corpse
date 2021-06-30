@@ -19,6 +19,9 @@
                 <h2>
                     <?php echo isset($story) ? "Continue Story" : "New Story" ?>
                 </h2>
+                @if(isset($msg))
+                <span class="text-dark-orange fs-5">{{$msg}}</span>
+                @endif
             </div>
         </div>
         <div class="row">

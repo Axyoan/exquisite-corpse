@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -77,10 +78,6 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        Auth::logout();
-        if ($user->delete()) {
-            dd("worked :o");
-        }
         return view('users.userShow', compact('user'));
     }
 
@@ -104,7 +101,52 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        if (isset($request->oldPassword)) {
+            $passwordErrors = [];
+            if (!isset($request->oldPassword) || !isset($request->newPassword) || !isset($request->newPasswordConfirm)) {
+                $passwordErrors[] = "Missing data";
+            }
+
+            if (!Hash::check($request->oldPassword, $user->password)) {
+                $passwordErrors[] = "Wrong password";
+            }
+            if (Hash::check($request->newPassword, $user->password)) {
+                $passwordErrors[] = "New password can't be the same as the old one.";
+            }
+            if ($request->newPassword != $request->newPasswordConfirm) {
+                $passwordErrors[] = "Passwords don't match";
+            }
+            if (!empty($passwordErrors)) {
+                return redirect()->route('profile.show')->with(['passwordErrors' => $passwordErrors]);
+            }
+            $user->password = Hash::make($request->newPassword);
+            $user->save();
+            return redirect()->route('profile.show');
+        }
+        $infoErrors = [];
+        if (!isset($request->name) || !isset($request->email)) {
+            $infoErrors[] = "Missing data";
+        }
+        $newName = $request->name;
+        $newEmail = $request->email;
+        $userExists = User::where('name', $newName)->first();
+        if ($userExists && $newName != $user->name) {
+            $infoErrors[] = "Name already exists";
+        }
+        $emailExists = User::where('email', $newEmail)->first();
+        if ($emailExists && $newEmail != $user->email) {
+            $infoErrors[] = "Email already exists";
+        }
+        if (!filter_var($newEmail, FILTER_VALIDATE_EMAIL)) {
+            $infoErrors[] = "Not a valid Email";
+        }
+        if (!empty($infoErrors)) {
+            return redirect()->route('profile.show')->with(['infoErrors' => $infoErrors]);
+        }
+        $user->name = $newName;
+        $user->email = $newEmail;
+        $user->save();
+        return redirect()->route('profile.show');
     }
 
     /**
