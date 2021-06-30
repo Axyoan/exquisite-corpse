@@ -37,7 +37,7 @@ class StoryController extends Controller
                 },
                 $invalidStories->all()
             );
-            $story = Story::where('isFinished', false)->whereNotIn('id', $invalidIDs)->orderByRaw('RAND()')->take(1)->get();;
+            $story = Story::with('user')->where('isFinished', false)->whereNotIn('id', $invalidIDs)->orderByRaw('RAND()')->take(1)->get();;
             if (isset($story) && isset($story[0])) {
                 return view('stories.storyForm', compact('story'));
             } else {

@@ -34,7 +34,7 @@ class DrawingController extends Controller
                 },
                 $invalidDrawings->all()
             );
-            $drawing = Drawing::where('isFinished', false)->whereNotIn('id', $invalidIDs)->orderByRaw('RAND()')->take(1)->get();
+            $drawing = Drawing::with('user')->where('isFinished', false)->whereNotIn('id', $invalidIDs)->orderByRaw('RAND()')->take(1)->get();
             if (isset($drawing) && isset($drawing[0])) {
                 $drawing = $drawing[0];
                 return redirect()->action([DrawingController::class, 'edit'], ['drawing' => $drawing]);
