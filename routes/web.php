@@ -21,9 +21,12 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::get('story/redirect', [StoryController::class, 'redirect']);
 Route::get('drawing/redirect', [DrawingController::class, 'redirect']);
+Route::get('drawing/getDrawing', [DrawingController::class, 'getDrawing'])->name('getDrawing');
 Route::get('user/login', [UserController::class, 'login']);
 Route::get('user/{user}/destroy', [UserController::class, 'destroy'])->name('deleteUser');
 Route::get('user/{user}/update', [UserController::class, 'update'])->name('updateUser');
+Route::get('story/getStory', [StoryController::class, 'getStory'])->name('getStory');
+Route::resource('story', StoryController::class);
 Route::post('story/{story}/post-comment', [StoryController::class, 'postComment'])->name('story.post-comment');
 Route::post('drawing/{drawing}/post-comment', [DrawingController::class, 'postComment'])->name('drawing.post-comment');
 Route::resource('user', UserController::class);
@@ -35,6 +38,9 @@ Route::get('/', [IndexController::class, 'index']);
 
 Route::get('/about', function () {
     return view('about');
+});
+Route::get('/api', function () {
+    return view('api');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

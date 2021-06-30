@@ -19,8 +19,8 @@ class StoryController extends Controller
     private $rules;
     public function __construct()
     {
-        $this->middleware('auth')->except('show', 'redirect');
-        $this->middleware('verified')->except('show', 'redirect');
+        $this->middleware('auth')->except('show', 'redirect', 'getStory');
+        $this->middleware('verified')->except('show', 'redirect', 'getStory');
     }
 
 
@@ -59,6 +59,12 @@ class StoryController extends Controller
         $comment->commentable_type = 'App\Models\Story';
         $comment->save();
         return redirect()->action([StoryController::class, 'show'], ['story' => $story]);
+    }
+
+    public function getStory()
+    {
+        $story = Story::where('isFinished', true)->orderByRaw('RAND()')->take(1)->first();
+        return $story->toJson();
     }
 
     /**

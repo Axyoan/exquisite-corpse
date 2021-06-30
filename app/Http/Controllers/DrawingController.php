@@ -18,8 +18,8 @@ class DrawingController extends Controller
     private $rules;
     public function __construct()
     {
-        $this->middleware('auth')->except(['show', 'redirect']);
-        $this->middleware('verified')->except(['show', 'redirect']);
+        $this->middleware('auth')->except(['show', 'redirect', 'getDrawing']);
+        $this->middleware('verified')->except(['show', 'redirect', 'getDrawing']);
     }
 
     public function redirect(Request $request)
@@ -58,6 +58,13 @@ class DrawingController extends Controller
         $comment->save();
         return redirect()->action([DrawingController::class, 'show'], ['drawing' => $drawing]);
     }
+
+    public function getDrawing()
+    {
+        $drawing = Drawing::where('isFinished', true)->orderByRaw('RAND()')->take(1)->first();
+        return $drawing->toJson();
+    }
+
     /**
      * Display a listing of the resource.
      *

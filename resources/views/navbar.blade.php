@@ -12,6 +12,9 @@
                 <li class="nav-item p-1">
                     <a class="nav-link active text-white" aria-current="page" href="/about">About</a>
                 </li>
+                <li class="nav-item p-1">
+                    <a class="nav-link active text-white" aria-current="page" href="/api">API</a>
+                </li>
                 @auth
                 <li class="nav-item p-1">
                     <x-jet-dropdown-link href="{{ route('profile.show') }}" class="nav-link active bg-light-teal text-white rounded">
