@@ -18,7 +18,7 @@
     <div class="container text-start mt-3">
         <h1 class="fs-1">About</h1>
         <p>
-            Exquisite corpse, also known as exquisite cadaver (from the original French term cadavre exquis), is a method by which a collection of words or images is collectively assembled. Each collaborator adds to a composition in sequence, either by being allowed to see only the end of what the previous person contributed.
+            Exquisite corpse, also known as exquisite cadaver (from the original French term cadavre exquis), is a method by which a collection of words or images is collectively assembled. Each collaborator adds to a composition in sequence, by being allowed to see only the end of what the previous person contributed.
         </p>
         <div class="container mx-auto">
             <img class="img-fluid mx-auto d-block" src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Exquisite_Corpse_%286042257203%29.jpg" alt="Drawing made with the exquisite corpse method">
