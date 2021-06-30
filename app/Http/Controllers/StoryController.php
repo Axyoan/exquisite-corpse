@@ -37,7 +37,7 @@ class StoryController extends Controller
                 },
                 $invalidStories->all()
             );
-            $story = Story::with('user')->where('isFinished', false)->whereNotIn('id', $invalidIDs)->orderByRaw('RAND()')->take(1)->get();;
+            $story = Story::with('users')->where('isFinished', false)->whereNotIn('id', $invalidIDs)->orderByRaw('RAND()')->take(1)->get();;
             if (isset($story) && isset($story[0])) {
                 return view('stories.storyForm', compact('story'));
             } else {
@@ -84,7 +84,7 @@ class StoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('stories.storyForm');
     }
 
     /**
@@ -95,6 +95,14 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            $authError = "Must be logged in and have a verified email to post";
+            return back()->withErrors([$authError]);
+        }
+        if (strlen($request->text) < 200 || strlen($request->text) > 1000) {
+            $storeError = "Story must be 200 characters or more, and no more than 1000 characters";
+            return back()->withErrors([$storeError]);
+        }
         $story = new Story();
         $story->text = $request->text;
         $story->score = 0;
@@ -102,6 +110,7 @@ class StoryController extends Controller
         $story->save();
         $user_id = Auth::id();
         $story->users()->attach($user_id);
+
         return redirect('/');
     }
 
@@ -141,10 +150,18 @@ class StoryController extends Controller
      */
     public function update(Request $request, Story $story)
     {
+        if (!Auth::check()) {
+            $authError = "Must be logged in and have a verified email";
+            return back()->withErrors([$authError]);
+        }
         if (isset($request->change)) {
             $story->score += $request->change == "inc" ? 1 : -1;
             $story->save();
             return $this->show($story);
+        }
+        if (strlen($request->text) < 200 || strlen($request->text) > 1000) {
+            $storeError = "Story must be 200 characters or more, and no more than 1000 characters";
+            return back()->withErrors([$storeError]);
         }
         $story->isFinished = isset($request->isFinished);
         $story->text = $story->text . $request->text;

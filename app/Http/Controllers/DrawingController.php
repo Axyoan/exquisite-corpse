@@ -34,7 +34,7 @@ class DrawingController extends Controller
                 },
                 $invalidDrawings->all()
             );
-            $drawing = Drawing::with('user')->where('isFinished', false)->whereNotIn('id', $invalidIDs)->orderByRaw('RAND()')->take(1)->get();
+            $drawing = Drawing::with('users')->where('isFinished', false)->whereNotIn('id', $invalidIDs)->orderByRaw('RAND()')->take(1)->get();
             if (isset($drawing) && isset($drawing[0])) {
                 $drawing = $drawing[0];
                 return redirect()->action([DrawingController::class, 'edit'], ['drawing' => $drawing]);
@@ -93,6 +93,10 @@ class DrawingController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            $authError = "Must be logged in and have a verified email to post";
+            return back()->withErrors([$authError]);
+        }
         $drawing = new Drawing();
         $drawing->image = $request->png;
         $drawing->score = 0;
@@ -139,6 +143,10 @@ class DrawingController extends Controller
      */
     public function update(Request $request, Drawing $drawing)
     {
+        if (!Auth::check()) {
+            $authError = "Must be logged in and have a verified email to post";
+            return back()->withErrors([$authError]);
+        }
         if (isset($request->change)) {
             $drawing->score += $request->change == "inc" ? 1 : -1;
             $drawing->save();
